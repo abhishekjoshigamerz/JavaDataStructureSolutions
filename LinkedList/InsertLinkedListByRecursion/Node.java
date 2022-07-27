@@ -1,4 +1,4 @@
-package LinkedList;
+package LinkedList.InsertLinkedListByRecursion;
 
 public class Node<T> {
     T data;
