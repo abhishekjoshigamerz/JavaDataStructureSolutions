@@ -14,16 +14,25 @@ public class BinaryTreeUse {
 
     }
 
-    public static BinaryTreeNode<Integer> takeTreeInput() {
-        System.out.println("Enter root data");
+    public static BinaryTreeNode<Integer> takeTreeInput(boolean isRoot, int parentData, boolean isLeft) {
+        if (isRoot) {
+            System.out.println("Enter root data");
+        } else {
+            if (isLeft) {
+                System.out.println("Enter left Child of " + parentData);
+            } else {
+                System.out.println("Enter right Child of " + parentData);
+            }
+        }
+
         Scanner sdata = new Scanner(System.in);
         int rootData = sdata.nextInt();
         if (rootData == -1) {
             return null;
         }
         BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootData);
-        BinaryTreeNode<Integer> leftChild = takeTreeInput();
-        BinaryTreeNode<Integer> rightChild = takeTreeInput();
+        BinaryTreeNode<Integer> leftChild = takeTreeInput(false, rootData, true);
+        BinaryTreeNode<Integer> rightChild = takeTreeInput(false, rootData, false);
         root.left = leftChild;
         root.right = rightChild;
         return root;
@@ -46,6 +55,15 @@ public class BinaryTreeUse {
         printTreeDetail(root.right);
     }
 
+    public static int nodeCount(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftNodeCount = nodeCount(root.left);
+        int rightNodeCount = nodeCount(root.right);
+        return 1 + leftNodeCount + rightNodeCount;
+    }
+
     public static void main(String[] args) {
         // BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(1);
         // BinaryTreeNode<Integer> rootLeft = new BinaryTreeNode<Integer>(2);
@@ -61,7 +79,8 @@ public class BinaryTreeUse {
         // rootRight.left = threeLeft;
 
         // printTree(root);
-        BinaryTreeNode<Integer> root = takeTreeInput();
+        BinaryTreeNode<Integer> root = takeTreeInput(true, 0, true);
         printTreeDetail(root);
+        System.out.println("Total nodes are " + nodeCount(root));
     }
 }
